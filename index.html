@@ -1,10 +1,21 @@
 <style>
+	input {
+		background-image: url('https://www.w3schools.com/css/searchicon.png');
+  		background-position: 10px 12px;
+  		background-repeat: no-repeat;
+		font-size: 16px;
+		border: 1px solid #ddd;
+		padding: 12px 20px 12px 40px;
+		width: 100%;
+	}
+
 	table {
 		border-collapse: collapse;
 		margin: 25px 0;
 		font-size: 0.9em;
 		font-family: sans-serif;
 		min-width: 400px;
+		width: 100%;
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	}
 	
@@ -74,8 +85,24 @@
 				(el) => {el.innerHTML = el.innerHTML.replaceAll('[', '<span>[').replaceAll(']', ']</span>');}
 			)
 		}
-	);	
+	);
+	
+	function search() {
+		let filter = document.getElementById('searchBox').value.toLowerCase();
+		
+		document.querySelectorAll('table tbody tr').forEach(
+			(row) => {
+				tableCell = row.getElementsByTagName('td')[1];
+				if (tableCell) {
+					let txtValue = tableCell.textContent || tableCell.innerText;
+					row.style.display = txtValue.indexOf(filter) > -1 ? 'table-row': 'none';
+				}
+			}
+	  	);
+	}	
 </script>
+
+<input type="text" id="searchBox" onkeyup="search()" placeholder="Search for words..." />
 
 <table class="table table-bordered table-hover table-condensed">
 <thead><tr><th>#</th><th title="Field #1">word</th>
